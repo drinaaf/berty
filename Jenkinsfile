@@ -7,7 +7,7 @@ pipeline {
                 
                 sh '''
                 echo 'Building... '
-                docker compose  build  build-agent
+                docker-compose  build  build-agent
                 '''
             }
                post {
@@ -17,7 +17,7 @@ pipeline {
                     emailext attachLog: true,
                     body: "${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}",
                     recipientProviders: [developers(), requestor()],
-                    subject: "Tests failed",
+                    subject: "Build failed",
                     to: 'aleksandra.furyk@gmail.com'
                 }
 
