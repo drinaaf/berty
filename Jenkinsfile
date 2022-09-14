@@ -7,8 +7,28 @@ pipeline {
                 
                 sh '''
                 echo 'Building... '
-                docker-compose  build  build-agent
+                docker compose  build  build-agent
                 '''
+            }
+               post {
+               
+                failure {
+                    echo 'Build failed!'
+                    emailext attachLog: true,
+                    body: "${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}",
+                    recipientProviders: [developers(), requestor()],
+                    subject: "Tests failed",
+                    to: 'aleksandra.furyk@gmail.com'
+                }
+
+                 success {
+                    echo 'Susces!'
+                    emailext attachLog: true,
+                    body: "${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}",
+                    recipientProviders: [developers(), requestor()],
+                    subject: "Success",
+                    to: 'aleksandra.furyk@gmail.com'
+                }
             }
         }
         stage('Test') {
