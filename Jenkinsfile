@@ -7,7 +7,7 @@ pipeline {
                 
                 sh '''
                 echo 'Building... '
-                docker-compose  build  build-agent
+                docker-compose  up
                 '''
             }
                post {
