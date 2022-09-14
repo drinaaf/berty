@@ -1,0 +1,3 @@
+FROM build-berty
+
+CMD ["testbot"]

@@ -1,0 +1,16 @@
+version: '3.3'
+services:
+ build-agent:
+  container_name: build-agent
+  image: build-berty:latest
+  build:
+   context: .
+   dockerfile: ./build-agent
+ test-agent:
+  container_name: test-agent
+  image: test-berty:latest
+  build:
+   context: .
+   dockerfile: ./test-agent
+  depends_on:
+  - build-berty
